@@ -1,0 +1,1777 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book HVAC Appointment</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.2.0/dist/tabler-icons.min.css"
+    />
+    <style>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      :root {
+        --navy: #1a3a4a;
+        --navy2: #1f4a5e;
+        --navy3: #255872;
+        --sky: #2bbcbc;
+        --teal: #2bbcbc;
+        --teal-bg: #e6f7f7;
+        --teal-bd: #9adede;
+        --amber: #d4541a;
+        --amber-bg: #fdf0ea;
+        --amber-bd: #f0b89a;
+        --red: #d93737;
+        --red-bg: #fee8e8;
+        --bg: #f5f7fa;
+        --sur: #fff;
+        --sur2: #f0f4f5;
+        --bd: #dee4ed;
+        --bd2: #cbd2df;
+        --tx: #1a2b3c;
+        --tx2: #4a5f75;
+        --tx3: #8396ab;
+        --r: 10px;
+        --rs: 7px;
+        --orange: #d4541a;
+        --orange2: #b84216;
+      }
+      body {
+        font-family: "DM Sans", system-ui, sans-serif;
+        background: var(--bg);
+        min-height: 100vh;
+        display: flex;
+        align-items: flex-start;
+        justify-content: center;
+        padding: 24px 16px 40px;
+      }
+      .wrap {
+        width: 100%;
+        max-width: 440px;
+        background: var(--sur);
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(13, 33, 55, 0.13);
+        border: 1px solid var(--bd);
+      }
+
+      /* header */
+      .hero {
+        background: linear-gradient(
+          135deg,
+          #1a3a4a 0%,
+          #1f4a5e 55%,
+          #255872 100%
+        );
+        padding: 20px 22px 18px;
+        position: relative;
+        overflow: hidden;
+      }
+      .hero::before {
+        content: "";
+        position: absolute;
+        right: -24px;
+        top: -24px;
+        width: 110px;
+        height: 110px;
+        border-radius: 50%;
+        background: #d4541a;
+        opacity: 0.18;
+      }
+      .hero::after {
+        content: "";
+        position: absolute;
+        right: 22px;
+        bottom: -18px;
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #2bbcbc;
+        opacity: 0.22;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 13px;
+        position: relative;
+        z-index: 1;
+      }
+      .brand img {
+        height: 42px;
+        width: auto;
+        filter: brightness(0) invert(1);
+      }
+      .hero-t {
+        font-size: 18px;
+        font-weight: 600;
+        color: #fff;
+        position: relative;
+        z-index: 1;
+        margin-bottom: 3px;
+      }
+      .hero-s {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.65);
+        position: relative;
+        z-index: 1;
+      }
+
+      /* urgency */
+      .urgbar {
+        background: var(--amber-bg);
+        border-bottom: 1px solid var(--amber-bd);
+        padding: 8px 20px;
+        display: flex;
+        align-items: center;
+        gap: 7px;
+        font-size: 12px;
+        color: var(--amber);
+        font-weight: 500;
+      }
+      .urgbar i {
+        font-size: 14px;
+        flex-shrink: 0;
+      }
+
+      /* progress */
+      .prog-bar {
+        height: 2px;
+        background: var(--bd);
+      }
+      .prog-fill {
+        height: 100%;
+        background: var(--orange);
+        transition: width 0.4s ease;
+      }
+
+      /* steps */
+      .steps {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 14px 24px 0;
+      }
+      .sdot {
+        width: 27px;
+        height: 27px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 11px;
+        font-weight: 600;
+        flex-shrink: 0;
+        border: 1.5px solid var(--bd2);
+        background: var(--sur2);
+        color: var(--tx3);
+        transition: all 0.25s;
+      }
+      .sdot.active {
+        background: var(--orange);
+        color: #fff;
+        border-color: var(--orange);
+      }
+      .sdot.done {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+      }
+      .sdot.done i {
+        font-size: 13px;
+      }
+      .sline {
+        flex: 1;
+        height: 1.5px;
+        background: var(--bd);
+        max-width: 56px;
+        transition: background 0.3s;
+      }
+      .sline.done {
+        background: var(--teal);
+      }
+      .slbls {
+        display: flex;
+        justify-content: space-between;
+        padding: 5px 18px 0;
+        font-size: 10px;
+        color: var(--tx3);
+        font-weight: 500;
+      }
+
+      /* body */
+      .fbody {
+        padding: 16px 20px 0;
+      }
+      .sec {
+        display: none;
+      }
+      .sec.active {
+        display: block;
+        animation: fadeUp 0.2s ease;
+      }
+      @keyframes fadeUp {
+        from {
+          opacity: 0;
+          transform: translateY(6px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .stitle {
+        font-size: 13px;
+        font-weight: 600;
+        color: var(--tx);
+        margin-bottom: 12px;
+      }
+
+      /* fields */
+      .field {
+        margin-bottom: 11px;
+      }
+      .field label {
+        display: block;
+        font-size: 11.5px;
+        font-weight: 500;
+        color: var(--tx2);
+        margin-bottom: 5px;
+      }
+      .field input,
+      .field textarea {
+        width: 100%;
+        border: 1.5px solid var(--bd);
+        border-radius: var(--rs);
+        padding: 9px 12px;
+        font-size: 13.5px;
+        font-family: inherit;
+        background: var(--sur);
+        color: var(--tx);
+        transition:
+          border-color 0.15s,
+          box-shadow 0.15s;
+        outline: none;
+      }
+      .field input:focus,
+      .field textarea:focus {
+        border-color: var(--sky);
+        box-shadow: 0 0 0 3px rgba(43, 142, 202, 0.12);
+      }
+      .field textarea {
+        resize: none;
+        height: 68px;
+        line-height: 1.5;
+      }
+      .frow {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 10px;
+      }
+      .err {
+        font-size: 11px;
+        color: var(--red);
+        margin-top: 4px;
+        display: none;
+      }
+      .field.bad input {
+        border-color: var(--red);
+      }
+      .field.bad .err {
+        display: block;
+      }
+
+      /* service grid */
+      .sgrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        margin-bottom: 14px;
+      }
+      .sc {
+        border: 1.5px solid var(--bd);
+        border-radius: var(--r);
+        padding: 11px 10px 9px;
+        cursor: pointer;
+        background: var(--sur);
+        text-align: center;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .sc:hover {
+        border-color: var(--sky);
+        background: #eff7fd;
+      }
+      .sc.sel {
+        border-color: var(--teal);
+        background: #e6f7f7;
+        border-width: 2px;
+      }
+      .sc i {
+        font-size: 22px;
+        color: var(--sky);
+        display: block;
+        margin-bottom: 5px;
+      }
+      .sc.sel i {
+        color: var(--teal);
+      }
+      .sc-lb {
+        font-size: 11.5px;
+        font-weight: 500;
+        color: var(--tx);
+        line-height: 1.3;
+      }
+
+      /* urgency pills */
+      .upills {
+        display: flex;
+        gap: 6px;
+        flex-wrap: wrap;
+        margin-bottom: 14px;
+      }
+      .upill {
+        border: 1.5px solid var(--bd);
+        border-radius: 20px;
+        padding: 6px 13px;
+        font-size: 12px;
+        cursor: pointer;
+        background: var(--sur);
+        color: var(--tx);
+        font-family: inherit;
+        font-weight: 400;
+        transition: all 0.15s;
+        white-space: nowrap;
+      }
+      .upill:hover {
+        border-color: var(--sky);
+      }
+      .upill.sel {
+        background: var(--orange);
+        color: #fff;
+        border-color: var(--orange);
+      }
+
+      /* week navigator */
+      .week-nav {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 10px;
+      }
+      .warrow {
+        width: 30px;
+        height: 30px;
+        border-radius: 8px;
+        border: 1.5px solid var(--bd);
+        background: var(--sur);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: all 0.15s;
+        flex-shrink: 0;
+      }
+      .warrow:hover {
+        border-color: var(--sky);
+        background: #eff7fd;
+      }
+      .warrow.dis {
+        opacity: 0.3;
+        pointer-events: none;
+      }
+      .warrow i {
+        font-size: 15px;
+        color: var(--tx2);
+      }
+      .wrange {
+        font-size: 12px;
+        font-weight: 600;
+        color: var(--tx2);
+      }
+
+      /* day tabs */
+      .dtabs {
+        display: grid;
+        grid-template-columns: repeat(5, 1fr);
+        gap: 5px;
+        margin-bottom: 14px;
+      }
+      .dtab {
+        border: 1.5px solid var(--bd);
+        border-radius: var(--rs);
+        padding: 8px 4px 7px;
+        cursor: pointer;
+        background: var(--sur);
+        text-align: center;
+        transition: all 0.15s;
+        font-family: inherit;
+      }
+      .dtab:hover {
+        border-color: var(--sky);
+        background: #eff7fd;
+      }
+      .dtab.sel {
+        background: var(--teal);
+        border-color: var(--teal);
+      }
+      .dtab .dn {
+        font-size: 10px;
+        font-weight: 600;
+        color: var(--tx3);
+        margin-bottom: 2px;
+      }
+      .dtab .dd {
+        font-size: 15px;
+        font-weight: 700;
+        color: var(--tx);
+      }
+      .dtab .dm {
+        font-size: 9px;
+        color: var(--tx3);
+        margin-top: 1px;
+      }
+      .dtab.sel .dn,
+      .dtab.sel .dm {
+        color: rgba(255, 255, 255, 0.55);
+      }
+      .dtab.sel .dd {
+        color: #fff;
+      }
+
+      /* slots */
+      .slots-wrap {
+        margin-bottom: 14px;
+      }
+      .slot-spin {
+        display: none;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        padding: 22px;
+        font-size: 12px;
+        color: var(--tx3);
+      }
+      .slot-spin i {
+        animation: spin 0.9s linear infinite;
+        font-size: 16px;
+      }
+      @keyframes spin {
+        to {
+          transform: rotate(360deg);
+        }
+      }
+      .tgrid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8px;
+        display: none;
+      }
+      .ts {
+        border: 1.5px solid var(--bd);
+        border-radius: var(--rs);
+        padding: 11px 8px;
+        text-align: center;
+        font-size: 12.5px;
+        font-weight: 500;
+        cursor: pointer;
+        background: var(--sur);
+        color: var(--tx);
+        font-family: inherit;
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+      }
+      .ts i {
+        font-size: 13px;
+        color: var(--tx3);
+        transition: color 0.15s;
+      }
+      .ts:hover {
+        border-color: var(--sky);
+        background: #eff7fd;
+      }
+      .ts:hover i {
+        color: var(--sky);
+      }
+      .ts.sel {
+        background: var(--teal);
+        color: #fff;
+        border-color: var(--teal);
+        box-shadow: 0 2px 10px rgba(43, 188, 188, 0.22);
+      }
+      .ts.sel i {
+        color: rgba(255, 255, 255, 0.6);
+      }
+      .ts.na {
+        opacity: 0.35;
+        pointer-events: none;
+      }
+
+      /* trust */
+      .trust {
+        display: flex;
+        gap: 14px;
+        margin-bottom: 14px;
+        flex-wrap: wrap;
+      }
+      .trust-it {
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        font-size: 11px;
+        color: var(--tx3);
+      }
+      .trust-it i {
+        font-size: 13px;
+        color: var(--teal);
+      }
+
+      /* summary */
+      .sumcard {
+        background: var(--sur2);
+        border-radius: var(--rs);
+        border: 1px solid var(--bd);
+        padding: 12px 14px;
+        margin-bottom: 12px;
+      }
+      .sumrow {
+        display: flex;
+        justify-content: space-between;
+        font-size: 12px;
+        padding: 3.5px 0;
+      }
+      .sumrow .lb {
+        color: var(--tx3);
+      }
+      .sumrow .vl {
+        color: var(--tx);
+        font-weight: 500;
+      }
+
+      /* badges */
+      .cbadge {
+        display: flex;
+        align-items: center;
+        gap: 9px;
+        background: var(--teal-bg);
+        border: 1px solid var(--teal-bd);
+        border-radius: var(--rs);
+        padding: 11px 14px;
+        font-size: 12.5px;
+        font-weight: 600;
+        color: #0f6e56;
+        margin-bottom: 12px;
+      }
+      .cbadge i {
+        font-size: 19px;
+        color: var(--teal);
+        flex-shrink: 0;
+      }
+      .ibadge {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        background: var(--teal-bg);
+        border: 1px solid var(--teal-bd);
+        border-radius: var(--rs);
+        padding: 10px 13px;
+        font-size: 11.5px;
+        color: #0e6b6b;
+        margin-bottom: 12px;
+      }
+      .ibadge i {
+        font-size: 15px;
+        color: var(--teal);
+        flex-shrink: 0;
+      }
+      .ebadge {
+        background: var(--red-bg);
+        border: 1px solid #f5abab;
+        border-radius: var(--rs);
+        padding: 10px 13px;
+        font-size: 12px;
+        color: var(--red);
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        margin-bottom: 10px;
+      }
+      .ebadge i {
+        font-size: 15px;
+        flex-shrink: 0;
+      }
+
+      /* buttons */
+      .btn {
+        width: 100%;
+        background: var(--orange);
+        color: #fff;
+        border: none;
+        border-radius: var(--rs);
+        padding: 13px;
+        font-size: 14px;
+        font-weight: 600;
+        cursor: pointer;
+        font-family: inherit;
+        transition: all 0.15s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        margin-bottom: 4px;
+      }
+      .btn:hover {
+        background: var(--orange2);
+        box-shadow: 0 4px 14px rgba(212, 84, 26, 0.25);
+      }
+      .btn:active {
+        transform: scale(0.98);
+      }
+      .btn:disabled {
+        opacity: 0.38;
+        pointer-events: none;
+      }
+      .btn i {
+        font-size: 16px;
+      }
+      .bk {
+        background: none;
+        border: none;
+        color: var(--tx3);
+        font-size: 12px;
+        cursor: pointer;
+        font-family: inherit;
+        display: flex;
+        align-items: center;
+        gap: 4px;
+        padding: 0;
+        margin-bottom: 14px;
+      }
+      .bk:hover {
+        color: var(--tx);
+      }
+
+      /* footer */
+      .fnote {
+        text-align: center;
+        font-size: 11px;
+        color: var(--tx3);
+        padding: 10px 20px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 5px;
+      }
+
+      /* success */
+      .succ {
+        padding: 30px 22px 26px;
+        text-align: center;
+        display: none;
+      }
+      .succ-ic {
+        width: 62px;
+        height: 62px;
+        border-radius: 50%;
+        background: var(--teal-bg);
+        border: 1.5px solid var(--teal-bd);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 16px;
+      }
+      .succ-ic i {
+        font-size: 30px;
+        color: var(--teal);
+      }
+      .succ-t {
+        font-size: 18px;
+        font-weight: 600;
+        color: var(--tx);
+        margin-bottom: 6px;
+      }
+      .succ-s {
+        font-size: 13px;
+        color: var(--tx2);
+        line-height: 1.65;
+        margin-bottom: 18px;
+      }
+      .acard {
+        background: var(--teal);
+        border-radius: var(--r);
+        padding: 14px 16px;
+        margin-bottom: 18px;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 12px;
+      }
+      .acard-ic {
+        width: 38px;
+        height: 38px;
+        background: rgba(255, 255, 255, 0.12);
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+      }
+      .acard-ic i {
+        font-size: 20px;
+        color: #fff;
+      }
+      .acard-d {
+        font-size: 13px;
+        font-weight: 600;
+        color: #fff;
+      }
+      .acard-t {
+        font-size: 12px;
+        color: rgba(255, 255, 255, 0.6);
+        margin-top: 2px;
+      }
+      /* checkboxes */
+      .chk-wrap {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+        margin: 14px 0;
+      }
+      .chk-row {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        background: var(--sur2);
+        border: 1.5px solid var(--bd);
+        border-radius: var(--rs);
+        padding: 10px 12px;
+        transition: border-color 0.15s;
+        cursor: pointer;
+      }
+      .chk-row:hover {
+        border-color: var(--sky);
+      }
+      .chk-row.bad {
+        border-color: var(--red);
+        background: var(--red-bg);
+      }
+      .chk-row input[type="checkbox"] {
+        width: 16px;
+        height: 16px;
+        flex-shrink: 0;
+        margin-top: 1px;
+        accent-color: var(--orange);
+        cursor: pointer;
+      }
+      .chk-row label {
+        font-size: 11px;
+        color: var(--tx2);
+        line-height: 1.5;
+        cursor: pointer;
+      }
+      .chk-row label span.req {
+        color: var(--red);
+        font-size: 10px;
+        display: none;
+      }
+      .chk-row.bad label span.req {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      var GHL = {
+        apiKey: "pit-cc22ad8f-54d6-4974-838b-f6da91c07778",
+        calendarId: "owwmYvMHihbkMfDQNi3Y",
+        locationId: "6J2kq6uNCdVI2V1028Gn",
+        timezone: "America/Chicago",
+        base: "https://services.leadconnectorhq.com",
+      };
+      var MOCK = GHL.apiKey === "YOUR_GHL_API_KEY";
+    </script>
+
+    <div class="wrap">
+      <div class="hero">
+        <div class="brand">
+          <img
+            src="data:image/webp;base64,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"
+            alt="Grande Air Solutions"
+            style="
+              height: 42px;
+              width: auto;
+              object-fit: contain;
+              position: relative;
+              z-index: 1;
+              filter: brightness(0) invert(1);
+            "
+          />
+        </div>
+        <div class="hero-t">Schedule Now</div>
+        <div class="hero-s">
+          Same-day service &nbsp;&middot;&nbsp; Licensed &amp; insured
+          &nbsp;&middot;&nbsp; Austin, TX
+        </div>
+      </div>
+
+      <div class="urgbar">
+        <i class="ti ti-clock"></i>
+        <span id="urgtxt"
+          >&#9889; 3 appointments available today &mdash; spots fill fast!</span
+        >
+      </div>
+
+      <div class="prog-bar">
+        <div class="prog-fill" id="prog" style="width: 33%"></div>
+      </div>
+
+      <div class="steps">
+        <div class="sdot active" id="dot-1">1</div>
+        <div class="sline" id="ln-1"></div>
+        <div class="sdot" id="dot-2">2</div>
+        <div class="sline" id="ln-2"></div>
+        <div class="sdot" id="dot-3">3</div>
+      </div>
+      <div class="slbls">
+        <span style="margin-left: 6px">Service</span>
+        <span>Schedule</span>
+        <span style="margin-right: 2px">Confirm</span>
+      </div>
+
+      <div class="fbody">
+        <!-- STEP 1 -->
+        <div class="sec active" id="step-1">
+          <p class="stitle">What do you need help with?</p>
+          <div class="sgrid">
+            <button class="sc" data-s="AC Repair" onclick="selSvc(this)">
+              <i class="ti ti-temperature-minus"></i
+              ><span class="sc-lb">AC Repair</span>
+            </button>
+            <button class="sc" data-s="New AC Unit" onclick="selSvc(this)">
+              <i class="ti ti-tool"></i><span class="sc-lb">New AC Unit</span>
+            </button>
+            <button
+              class="sc"
+              data-s="Heating / Furnace"
+              onclick="selSvc(this)"
+            >
+              <i class="ti ti-flame"></i
+              ><span class="sc-lb">Heating / Furnace</span>
+            </button>
+            <button
+              class="sc"
+              data-s="Tune-Up / Maintenance"
+              onclick="selSvc(this)"
+            >
+              <i class="ti ti-settings"></i
+              ><span class="sc-lb">Tune-Up / Maintenance</span>
+            </button>
+            <button class="sc" data-s="Heat Pump" onclick="selSvc(this)">
+              <i class="ti ti-arrow-autofit-up"></i
+              ><span class="sc-lb">Heat Pump</span>
+            </button>
+            <button class="sc" data-s="Air Quality" onclick="selSvc(this)">
+              <i class="ti ti-wind"></i><span class="sc-lb">Air Quality</span>
+            </button>
+            <button class="sc" data-s="Emergency" onclick="selSvc(this)">
+              <i class="ti ti-urgent"></i><span class="sc-lb">Emergency</span>
+            </button>
+            <button class="sc" data-s="Other / Not Sure" onclick="selSvc(this)">
+              <i class="ti ti-help-circle"></i
+              ><span class="sc-lb">Not Sure / Other</span>
+            </button>
+          </div>
+
+          <p class="stitle">How urgent is this?</p>
+          <div class="upills">
+            <button class="upill" data-u="emergency" onclick="selUrg(this)">
+              &#128308; Emergency
+            </button>
+            <button class="upill" data-u="today" onclick="selUrg(this)">
+              Today
+            </button>
+            <button class="upill" data-u="this-week" onclick="selUrg(this)">
+              This week
+            </button>
+            <button class="upill" data-u="flexible" onclick="selUrg(this)">
+              I'm flexible
+            </button>
+          </div>
+
+          <div class="frow">
+            <div class="field" id="f-fn">
+              <label>First name</label
+              ><input id="fn" placeholder="Jane" autocomplete="given-name" />
+              <div class="err">Required</div>
+            </div>
+            <div class="field" id="f-ln">
+              <label>Last name</label
+              ><input id="ln" placeholder="Smith" autocomplete="family-name" />
+              <div class="err">Required</div>
+            </div>
+          </div>
+          <div class="field" id="f-ph">
+            <label>Best phone number</label
+            ><input
+              id="ph"
+              type="tel"
+              placeholder="(519) 000-0000"
+              autocomplete="tel"
+            />
+            <div class="err">Enter a valid phone number</div>
+          </div>
+          <div class="field">
+            <label
+              >Email
+              <span style="font-weight: 400; color: var(--tx3)"
+                >(optional)</span
+              ></label
+            ><input
+              id="em"
+              type="email"
+              placeholder="jane@email.com"
+              autocomplete="email"
+            />
+          </div>
+          <div class="field">
+            <label>Postal / ZIP code</label
+            ><input
+              id="zp"
+              placeholder="78701"
+              maxlength="10"
+              autocomplete="postal-code"
+            />
+          </div>
+
+          <button class="btn" onclick="goStep(2)">
+            <i class="ti ti-calendar"></i> Continue &mdash; pick a date &amp;
+            time
+          </button>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="sec" id="step-2">
+          <button class="bk" onclick="goStep(1)">
+            <i class="ti ti-arrow-left" style="font-size: 13px"></i> Back
+          </button>
+          <p class="stitle">Pick a date &amp; time</p>
+
+          <div class="week-nav">
+            <button class="warrow dis" id="wprev" onclick="changeWeek(-1)">
+              <i class="ti ti-chevron-left"></i>
+            </button>
+            <span class="wrange" id="wrange">&mdash;</span>
+            <button class="warrow" id="wnext" onclick="changeWeek(1)">
+              <i class="ti ti-chevron-right"></i>
+            </button>
+          </div>
+
+          <div class="dtabs" id="dtabs"></div>
+
+          <div class="slots-wrap">
+            <div class="slot-spin" id="spin">
+              <i class="ti ti-loader-2"></i> Checking availability&hellip;
+            </div>
+            <div class="tgrid" id="tgrid"></div>
+          </div>
+
+          <div class="trust">
+            <div class="trust-it">
+              <i class="ti ti-shield-check"></i> Licensed &amp; insured
+            </div>
+            <div class="trust-it">
+              <i class="ti ti-star"></i> 4.9 &#9733; (500+ reviews)
+            </div>
+            <div class="trust-it">
+              <i class="ti ti-phone"></i> Callback in 15 min
+            </div>
+          </div>
+
+          <button class="btn" onclick="goStep(3)" id="btn2" disabled>
+            Review &amp; confirm <i class="ti ti-arrow-right"></i>
+          </button>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="sec" id="step-3">
+          <button class="bk" onclick="goStep(2)">
+            <i class="ti ti-arrow-left" style="font-size: 13px"></i> Back
+          </button>
+          <p class="stitle">Confirm your appointment</p>
+
+          <div class="cbadge">
+            <i class="ti ti-calendar-event"></i
+            ><span id="conf-dt">&mdash;</span>
+          </div>
+
+          <div class="sumcard">
+            <div class="sumrow">
+              <span class="lb">Service</span
+              ><span class="vl" id="s-svc">&mdash;</span>
+            </div>
+            <div class="sumrow">
+              <span class="lb">Urgency</span
+              ><span class="vl" id="s-urg">&mdash;</span>
+            </div>
+            <div class="sumrow">
+              <span class="lb">Name</span>
+              <span class="vl" id="s-nm">&mdash;</span>
+            </div>
+            <div class="sumrow">
+              <span class="lb">Phone</span>
+              <span class="vl" id="s-ph">&mdash;</span>
+            </div>
+            <div class="sumrow">
+              <span class="lb">Email</span>
+              <span class="vl" id="s-em">&mdash;</span>
+            </div>
+            <div class="sumrow">
+              <span class="lb">Area</span>
+              <span class="vl" id="s-zp">&mdash;</span>
+            </div>
+          </div>
+
+          <div class="field">
+            <label
+              >Anything else we should know?
+              <span style="font-weight: 400; color: var(--tx3)"
+                >(optional)</span
+              ></label
+            >
+            <textarea
+              id="nt"
+              placeholder="Model/brand, description of problem, access instructions&hellip;"
+            ></textarea>
+          </div>
+
+          <div class="ibadge">
+            <i class="ti ti-lock"></i
+            ><span
+              >Free estimate &middot; No obligation &middot; We'll call to
+              confirm within 15 min</span
+            >
+          </div>
+          <div class="chk-wrap">
+            <div
+              class="chk-row"
+              id="chk-row-sms"
+              onclick="document.getElementById('chk-sms').click()"
+            >
+              <input
+                type="checkbox"
+                id="chk-sms"
+                onclick="event.stopPropagation()"
+              />
+              <label for="chk-sms">
+                I consent to receive SMS notifications and alerts from Grande
+                Air Solutions. Message frequency varies. Message and data rates
+                may apply. Text HELP to (512) 677-4424 for assistance. You can
+                reply STOP to unsubscribe at any time.
+                <span class="req">Please accept to continue</span>
+              </label>
+            </div>
+            <div
+              class="chk-row"
+              id="chk-row-mkt"
+              onclick="document.getElementById('chk-mkt').click()"
+            >
+              <input
+                type="checkbox"
+                id="chk-mkt"
+                onclick="event.stopPropagation()"
+              />
+              <label for="chk-mkt">
+                By checking this box, I agree to receive occasional marketing
+                messages from Grande Air Solutions. Message frequency varies.
+                Message and data rates may apply. Text HELP to (512) 677-4424
+                for assistance.
+                <span class="req">Please accept to continue</span>
+              </label>
+            </div>
+          </div>
+
+          <div id="errbx" style="display: none">
+            <div class="ebadge">
+              <i class="ti ti-alert-circle"></i><span id="errmsg"></span>
+            </div>
+          </div>
+
+          <button class="btn" onclick="submitForm()" id="btn3">
+            <i class="ti ti-calendar-check"></i> Book My Appointment
+          </button>
+        </div>
+      </div>
+
+      <div class="succ" id="succ">
+        <div class="succ-ic"><i class="ti ti-check"></i></div>
+        <div class="succ-t">You're on the schedule! &#127881;</div>
+        <div class="succ-s">
+          A confirmation will be sent to
+          <strong id="sc-ct"></strong>.<br />We'll call you within 15 minutes to
+          confirm.
+        </div>
+        <div class="acard">
+          <div class="acard-ic"><i class="ti ti-calendar-event"></i></div>
+          <div>
+            <div class="acard-d" id="sc-dt">&mdash;</div>
+            <div class="acard-t" id="sc-tm">&mdash;</div>
+          </div>
+        </div>
+        <div class="trust" style="justify-content: center; gap: 16px">
+          <div class="trust-it">
+            <i class="ti ti-shield-check"></i> Licensed &amp; insured
+          </div>
+          <div class="trust-it">
+            <i class="ti ti-star"></i> 4.9 &#9733; (380+ reviews)
+          </div>
+        </div>
+      </div>
+
+      <div class="fnote">
+        <i class="ti ti-lock" style="font-size: 12px"></i> Your info is private
+        &amp; never shared
+      </div>
+    </div>
+
+    <script>
+      // ── CONFIG ──────────────────────────────────────────────────────────
+      var SLOTS = [
+        { lb: "8:00 – 10:00 AM", st: "08:00", en: "10:00", h: 8 },
+        { lb: "10:00 AM – 12:00 PM", st: "10:00", en: "12:00", h: 10 },
+        { lb: "12:00 – 2:00 PM", st: "12:00", en: "14:00", h: 12 },
+        { lb: "2:00 – 4:00 PM", st: "14:00", en: "16:00", h: 14 },
+        { lb: "4:00 – 6:00 PM", st: "16:00", en: "18:00", h: 16 },
+        { lb: "6:00 – 8:00 PM", st: "18:00", en: "20:00", h: 18 },
+      ];
+      var DN = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+      var MN = [
+        "Jan",
+        "Feb",
+        "Mar",
+        "Apr",
+        "May",
+        "Jun",
+        "Jul",
+        "Aug",
+        "Sep",
+        "Oct",
+        "Nov",
+        "Dec",
+      ];
+      var MNL = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+      ];
+      var DNL = [
+        "Sunday",
+        "Monday",
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday",
+        "Saturday",
+      ];
+
+      // ── STATE ────────────────────────────────────────────────────────────
+      var today = new Date();
+      today.setHours(0, 0, 0, 0);
+      var wkOff = 0; // week offset (0 = first available week)
+      var curDay = null; // selected Date
+      var cache = {}; // YYYY-MM-DD -> [iso...]
+      var ST = {
+        svc: null,
+        urg: null,
+        date: null,
+        label: null,
+        isoSt: null,
+        isoEn: null,
+      };
+
+      // ── UTILS ────────────────────────────────────────────────────────────
+      function pad(n) {
+        return String(n).padStart(2, "0");
+      }
+      function ymd(d) {
+        return (
+          d.getFullYear() + "-" + pad(d.getMonth() + 1) + "-" + pad(d.getDate())
+        );
+      }
+      function val(id) {
+        return (document.getElementById(id) || {}).value || "";
+      }
+      function err(id, on) {
+        document.getElementById(id).classList.toggle("bad", on);
+      }
+      function sleep(ms) {
+        return new Promise(function (r) {
+          setTimeout(r, ms);
+        });
+      }
+      function isSame(a, b) {
+        return (
+          a.getFullYear() === b.getFullYear() &&
+          a.getMonth() === b.getMonth() &&
+          a.getDate() === b.getDate()
+        );
+      }
+
+      // Monday of the Nth available week (week 0 = first Mon on/after tomorrow)
+      // Returns the Monday of the week containing today (or last Monday if today is weekend)
+      function monday(off) {
+        var b = new Date(today);
+        // Go back to Monday of current week
+        var dow = b.getDay(); // 0=Sun,1=Mon...6=Sat
+        if (dow === 0) dow = 7; // treat Sunday as day 7 so Mon=1
+        b.setDate(b.getDate() - (dow - 1)); // rewind to Monday
+        // Then add offset weeks
+        b.setDate(b.getDate() + off * 7);
+        return b;
+      }
+
+      function svcCategory() {
+        var svc = ST.svc || "";
+        if (svc === "Tune-Up / Maintenance") return "maintenance";
+        if (svc === "New AC Unit" || svc === "Other / Not Sure")
+          return "install";
+        return "repair"; // AC Repair, Heating/Furnace, Heat Pump, Air Quality, Emergency
+      }
+
+      // 5 business days (Mon-Fri) for given week offset, starting from today or later
+      function bizDays(off) {
+        var m = monday(off),
+          r = [];
+        var maxDays = svcCategory() === "maintenance" ? 5 : 6; // repairs/installs include weekends
+
+        for (var i = 0; i < maxDays; i++) {
+          //for (var i = 0; i < 5; i++) {
+          var d = new Date(m);
+          d.setDate(m.getDate() + i);
+          // For week 0 only show today and future days (not past days)
+          if (off === 0 && d < today) continue;
+          r.push(d);
+        }
+        console.log(maxDays, r);
+        return r;
+      }
+      function hFromIso(iso) {
+        var t = iso.indexOf("T");
+        return t !== -1
+          ? parseInt(iso.slice(t + 1, t + 3), 10)
+          : parseInt(iso.slice(0, 2), 10);
+      }
+
+      // ── ISO HELPERS (mirrors n8n appointment ISO pattern) ─────────────────
+      // Add N hours to a full ISO string, preserving the offset
+      // e.g. addHours("2026-05-20T14:00:00-05:00", 2) → "2026-05-20T16:00:00-05:00"
+      function addHours(iso, n) {
+        var offsetMatch = iso.match(/([+-]\d{2}:\d{2}|Z)$/);
+        var offset = offsetMatch ? offsetMatch[0] : "";
+        var base = offset ? iso.slice(0, iso.length - offset.length) : iso;
+        var parts = base.match(/^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2}):(\d{2})/);
+        if (!parts) return iso;
+        var h = parseInt(parts[2], 10) + n;
+        var datePart = parts[1];
+        if (h >= 24) {
+          h -= 24;
+          var d = new Date(datePart + "T12:00:00");
+          d.setDate(d.getDate() + 1);
+          datePart =
+            d.getFullYear() +
+            "-" +
+            pad(d.getMonth() + 1) +
+            "-" +
+            pad(d.getDate());
+        }
+        return (
+          datePart + "T" + pad(h) + ":" + parts[3] + ":" + parts[4] + offset
+        );
+      }
+
+      // ── GHL FREE-SLOTS ────────────────────────────────────────────────────
+      async function freeSlots(dateObj) {
+        var k = ymd(dateObj);
+        if (cache[k]) return cache[k];
+        if (MOCK) {
+          var s = SLOTS.map(function (x) {
+            return k + "T" + x.st + ":00";
+          });
+          cache[k] = s;
+          return s;
+        }
+        try {
+          // GHL requires startDate/endDate as Unix milliseconds
+          var baseDate = new Date(k);
+          let sd = new Date(baseDate);
+          sd.setDate(sd.getDate() - 1);
+          let ed = new Date(baseDate);
+          ed.setDate(ed.getDate() + 1);
+          sd = sd.toISOString().split("T")[0];
+          ed = ed.toISOString().split("T")[0];
+          var startMs = new Date(sd + "T00:00:00").getTime();
+          var endMs = new Date(ed + "T23:59:59").getTime();
+          var url =
+            GHL.base +
+            "/calendars/" +
+            GHL.calendarId +
+            "/free-slots" +
+            "?startDate=" +
+            startMs +
+            "&endDate=" +
+            endMs +
+            "&timezone=" +
+            encodeURIComponent(GHL.timezone);
+          console.log("[GHL free-slots] GET", url);
+          var res = await fetch(url, {
+            headers: {
+              Authorization: "Bearer " + GHL.apiKey,
+              Version: "2021-07-28",
+            },
+          });
+          if (!res.ok) {
+            var errBody = await res.json().catch(function () {
+              return {};
+            });
+            console.error("[GHL free-slots] error:", res.status, errBody);
+            throw new Error("HTTP " + res.status);
+          }
+          var data = await res.json();
+          console.log("[GHL free-slots] response:", JSON.stringify(data));
+          var s = [];
+          // GHL returns: { "2026-05-20": { slots: ["2026-05-20T14:00:00-05:00", ...] }, traceId: "..." }
+          if (data && data[k] && Array.isArray(data[k].slots)) {
+            s = data[k].slots;
+          } else if (data && data._dates_ && data._dates_[k]) {
+            s = data._dates_[k].slots || [];
+          } else if (Array.isArray(data)) {
+            s = data;
+          } else {
+            // fallback: find first key that looks like a date and has slots
+            var dateKeys = Object.keys(data).filter(function (key) {
+              return (
+                /^\d{4}-\d{2}-\d{2}$/.test(key) && data[key] && data[key].slots
+              );
+            });
+            if (dateKeys.length) s = data[dateKeys[0]].slots || [];
+          }
+          console.log("[GHL free-slots] parsed slots for", k, "->", s);
+          cache[k] = s;
+          return s;
+        } catch (e) {
+          console.warn("[slots]", e.message);
+          cache[k] = [];
+          return [];
+        }
+      }
+
+      // ── WEEK RENDER ───────────────────────────────────────────────────────
+      function renderWeek() {
+        var days = bizDays(wkOff);
+        var mon = days[0],
+          fri = days[days.length - 1];
+        document.getElementById("wrange").textContent =
+          MN[mon.getMonth()] +
+          " " +
+          mon.getDate() +
+          " – " +
+          MN[fri.getMonth()] +
+          " " +
+          fri.getDate() +
+          ", " +
+          fri.getFullYear();
+        document.getElementById("wprev").classList.toggle("dis", wkOff === 0);
+
+        var el = document.getElementById("dtabs");
+        el.innerHTML = "";
+        days.forEach(function (d) {
+          var btn = document.createElement("button");
+          btn.className = "dtab" + (curDay && isSame(d, curDay) ? " sel" : "");
+          btn.innerHTML =
+            "<div class='dn'>" +
+            DN[d.getDay()] +
+            "</div>" +
+            "<div class='dd'>" +
+            d.getDate() +
+            "</div>" +
+            "<div class='dm'>" +
+            MN[d.getMonth()] +
+            "</div>";
+          btn.onclick = (function (dt) {
+            return function () {
+              pickDay(dt);
+            };
+          })(new Date(d));
+          el.appendChild(btn);
+        });
+
+        // if selected day not in this week, clear
+        if (
+          curDay &&
+          !days.some(function (d) {
+            return isSame(d, curDay);
+          })
+        ) {
+          curDay = null;
+          clearSlots();
+        }
+      }
+
+      function changeWeek(d) {
+        var n = wkOff + d;
+        if (n < 0) return;
+        wkOff = n;
+        renderWeek();
+      }
+
+      function pickDay(d) {
+        curDay = d;
+        // highlight tab
+        document.querySelectorAll(".dtab").forEach(function (t) {
+          t.classList.remove("sel");
+        });
+        var days = bizDays(wkOff);
+        var tabs = document.getElementById("dtabs").children;
+        for (var i = 0; i < days.length; i++) {
+          if (isSame(days[i], d)) {
+            tabs[i].classList.add("sel");
+            break;
+          }
+        }
+        // reset slot selection
+        ST.date = null;
+        ST.label = null;
+        ST.isoSt = null;
+        ST.isoEn = null;
+        document.getElementById("btn2").disabled = true;
+        loadSlots(d);
+      }
+
+      function clearSlots() {
+        document.getElementById("spin").style.display = "none";
+        document.getElementById("tgrid").style.display = "none";
+        document.getElementById("tgrid").innerHTML = "";
+      }
+
+      async function loadSlots(dateObj) {
+        var spin = document.getElementById("spin");
+        var grid = document.getElementById("tgrid");
+        spin.style.display = "flex";
+        grid.style.display = "none";
+        grid.innerHTML = "";
+
+        var free = await freeSlots(dateObj);
+        // Filter displayed slots by service type rules:
+        // Maintenance → weekdays only, 10 AM–3 PM only (slots starting at h=10,12)
+        // Repair/Emergency/Install → all slots
+        var cat = svcCategory();
+        var isWeekday = dateObj.getDay() >= 1 && dateObj.getDay() <= 5;
+        var allowedSlots = SLOTS.filter(function (s) {
+          if (cat === "maintenance") {
+            if (!isWeekday) return false; // weekdays only
+            return s.h >= 10 && s.h < 15; // 10:00 AM – 3:00 PM (slots at h=10,12)
+          }
+          return true; // repair & install: all slots
+        });
+        console.log(allowedSlots, cat, allowedSlots, SLOTS);
+        var fh = {};
+        free.forEach(function (iso) {
+          fh[hFromIso(iso)] = iso;
+        });
+
+        spin.style.display = "none";
+        grid.style.display = "grid";
+
+        // SLOTS.forEach(function (s) {
+        allowedSlots.forEach(function (s) {
+          var btn = document.createElement("button");
+          var iso =
+            fh[s.h] || (MOCK ? ymd(dateObj) + "T" + s.st + ":00" : null);
+          var avail = !!iso;
+          btn.className = "ts" + (avail ? "" : " na");
+          btn.innerHTML = "<i class='ti ti-clock'></i>" + s.lb;
+
+          if (!avail)
+            btn.innerHTML +=
+              "<span style='font-size:10px;opacity:.5;display:block'>Unavailable</span>";
+          if (avail) {
+            // Strip any offset/Z from startIso — GHL wants plain local time
+            // Keep EXACT ISO from GHL free-slots (e.g. "2026-05-20T14:00:00-05:00")
+            var offsetMatch = iso.match(/([+-]\\d{2}:\\d{2}|Z)$/);
+            var offset = offsetMatch ? offsetMatch[0] : "";
+            var endIso = addHours(iso, 2);
+            btn.onclick = (function (b, lb, si, ei) {
+              return function () {
+                pickSlot(b, lb, si, ei);
+              };
+            })(btn, s.lb, iso, endIso);
+          }
+          grid.appendChild(btn);
+        });
+      }
+
+      function pickSlot(btn, lb, si, ei) {
+        document.querySelectorAll(".ts").forEach(function (b) {
+          b.classList.remove("sel");
+        });
+        btn.classList.add("sel");
+        console.log(lb, si, ei);
+        ST.date = new Date(curDay);
+        ST.label = lb;
+        ST.isoSt = si;
+        ST.isoEn = ei;
+        document.getElementById("btn2").disabled = false;
+      }
+
+      // ── STEP 1 ────────────────────────────────────────────────────────────
+      function selSvc(el) {
+        document.querySelectorAll(".sc").forEach(function (c) {
+          c.classList.remove("sel");
+        });
+        el.classList.add("sel");
+        ST.svc = el.getAttribute("data-s");
+        if (ST.svc === "Emergency")
+          document.getElementById("urgtxt").textContent =
+            "\uD83D\uDEA8 Emergency slots available — we\'re ready now!";
+      }
+      function selUrg(el) {
+        document.querySelectorAll(".upill").forEach(function (p) {
+          p.classList.remove("sel");
+        });
+        el.classList.add("sel");
+        ST.urg = el.getAttribute("data-u");
+        if (ST.urg === "emergency")
+          document.getElementById("urgtxt").textContent =
+            "\uD83D\uDEA8 Emergency slots available — we\'re ready now!";
+      }
+
+      // ── VALIDATION ────────────────────────────────────────────────────────
+      function validate1() {
+        var fn = val("fn").trim(),
+          ln = val("ln").trim(),
+          ph = val("ph").trim();
+        err("f-fn", !fn);
+        err("f-ln", !ln);
+        err("f-ph", !ph || ph.replace(/\D/g, "").length < 10);
+        return fn && ln && ph && ph.replace(/\D/g, "").length >= 10;
+      }
+
+      // ── NAVIGATION ────────────────────────────────────────────────────────
+      function goStep(n) {
+        if (n === 2 && !validate1()) return;
+        [1, 2, 3].forEach(function (i) {
+          var dot = document.getElementById("dot-" + i);
+          var sec = document.getElementById("step-" + i);
+          if (i < n) {
+            dot.className = "sdot done";
+            dot.innerHTML = "<i class=\'ti ti-check\'></i>";
+          } else if (i === n) {
+            dot.className = "sdot active";
+            dot.textContent = i;
+          } else {
+            dot.className = "sdot";
+            dot.textContent = i;
+          }
+          sec.classList.toggle("active", i === n);
+        });
+        document.getElementById("ln-1").classList.toggle("done", n > 1);
+        document.getElementById("ln-2").classList.toggle("done", n > 2);
+        document.getElementById("prog").style.width =
+          n === 1 ? "33%" : n === 2 ? "66%" : "100%";
+        if (n === 2) {
+          cache = {};
+          wkOff = 0;
+          curDay = null;
+          renderWeek();
+          // Auto-select today if it's a business day, otherwise first available day
+          var days = bizDays(0);
+          if (days.length > 0) pickDay(days[0]);
+        }
+        if (n === 3) fillSummary();
+        document
+          .querySelector(".wrap")
+          .scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function fillSummary() {
+        var um = {
+          emergency: "\uD83D\uDD34 Emergency",
+          today: "Today",
+          "this-week": "This week",
+          flexible: "Flexible",
+        };
+        var ds = ST.date
+          ? DNL[ST.date.getDay()] +
+            ", " +
+            MN[ST.date.getMonth()] +
+            " " +
+            ST.date.getDate()
+          : "—";
+        document.getElementById("conf-dt").textContent =
+          ds + " · " + (ST.label || "—");
+        document.getElementById("s-svc").textContent = ST.svc || "—";
+        document.getElementById("s-urg").textContent = um[ST.urg] || "—";
+        document.getElementById("s-nm").textContent = (
+          val("fn") +
+          " " +
+          val("ln")
+        ).trim();
+        document.getElementById("s-ph").textContent = val("ph") || "—";
+        document.getElementById("s-em").textContent = val("em") || "—";
+        document.getElementById("s-zp").textContent = val("zp") || "—";
+      }
+
+      // ── GHL BOOK ──────────────────────────────────────────────────────────
+      async function bookGHL() {
+        if (MOCK) {
+          await sleep(1200);
+          return { ok: true };
+        }
+        try {
+          var h = {
+            Authorization: "Bearer " + GHL.apiKey,
+            "Content-Type": "application/json",
+            Version: "2021-07-28",
+          };
+          var fn = val("fn").trim(),
+            ln = val("ln").trim(),
+            ph = val("ph").trim();
+          var em = val("em").trim(),
+            zp = val("zp").trim(),
+            nt = val("nt").trim();
+          // upsert contact
+          var cr = await fetch(GHL.base + "/contacts/upsert", {
+            method: "POST",
+            headers: h,
+            body: JSON.stringify({
+              locationId: GHL.locationId,
+              firstName: fn,
+              lastName: ln,
+              phone: ph,
+              email: em || undefined,
+              postalCode: zp || undefined,
+              source: "Grande Air Solutions Website",
+              tags: [
+                "Website Lead",
+                ST.svc || "HVAC",
+                ST.urg === "emergency" ? "emergency" : null,
+              ].filter(Boolean),
+            }),
+          });
+          var cd = await cr.json();
+          var cid = cd && cd.contact && cd.contact.id;
+          if (!cid) throw new Error("Could not create contact");
+          // book appointment
+          // Use exact ISO strings from GHL free-slots response (includes offset e.g. -05:00)
+          // When offset is present, do NOT send timezone — they conflict in GHL API
+          var hasOffset = /([+-]\d{2}:\d{2}|Z)$/.test(ST.isoSt || "");
+          var apptPayload = {
+            calendarId: GHL.calendarId,
+            locationId: GHL.locationId,
+            contactId: cid,
+            startTime: ST.isoSt,
+            endTime: ST.isoEn,
+            title: (ST.svc || "Grande Air Solutions") + " — " + fn + " " + ln,
+            appointmentStatus: "confirmed",
+            notes: [
+              "Service: " + (ST.svc || "—"),
+              "Urgency: " + (ST.urg || "—"),
+              "Area: " + (zp || "—"),
+              nt ? "Notes: " + nt : null,
+            ]
+              .filter(Boolean)
+              .join("\n"),
+          };
+          // Only add timezone when times have no offset
+          if (!hasOffset) apptPayload.timezone = GHL.timezone;
+          console.log("[GHL] booking payload:", JSON.stringify(apptPayload));
+          var ar = await fetch(GHL.base + "/calendars/events/appointments", {
+            method: "POST",
+            headers: h,
+            body: JSON.stringify(apptPayload),
+          });
+          if (!ar.ok) {
+            var eb = await ar.json().catch(function () {
+              return {};
+            });
+            throw new Error(eb.message || "Error " + ar.status);
+          }
+          return { ok: true };
+        } catch (e) {
+          console.error("[GHL]", e);
+          return { ok: false, error: e.message };
+        }
+      }
+
+      async function submitForm() {
+        var smsOk = document.getElementById("chk-sms").checked;
+        var mktOk = document.getElementById("chk-mkt").checked;
+        var btn = document.getElementById("btn3");
+        btn.disabled = true;
+        btn.innerHTML =
+          "<i class='ti ti-loader-2' style='animation:spin .9s linear infinite'></i> Booking…";
+        document.getElementById("errbx").style.display = "none";
+        var r = await bookGHL();
+        if (!r.ok) {
+          btn.disabled = false;
+          btn.innerHTML =
+            "<i class='ti ti-calendar-check'></i> Book My Appointment";
+          document.getElementById("errmsg").textContent =
+            r.error || "Booking failed. Please try again or call us.";
+          document.getElementById("errbx").style.display = "block";
+          return;
+        }
+        window.location.href = "https://grandeairsolutions.com/form-thanks/";
+        [
+          ".hero",
+          ".urgbar",
+          ".prog-bar",
+          ".steps",
+          ".slbls",
+          ".fbody",
+          ".fnote",
+        ].forEach(function (s) {
+          var e = document.querySelector(s);
+          if (e) e.style.display = "none";
+        });
+        var ds = ST.date
+          ? DNL[ST.date.getDay()] +
+            ", " +
+            MNL[ST.date.getMonth()] +
+            " " +
+            ST.date.getDate() +
+            ", " +
+            ST.date.getFullYear()
+          : "—";
+        document.getElementById("sc-dt").textContent = ds;
+        document.getElementById("sc-tm").textContent = ST.label || "—";
+        document.getElementById("sc-ct").textContent = val("em") || val("ph");
+        var sw = document.getElementById("succ");
+        sw.style.display = "block";
+        sw.style.animation = "fadeUp .3s ease";
+      }
+    </script>
+  </body>
+</html>
