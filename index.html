@@ -948,6 +948,30 @@
             />
           </div>
           <div class="field">
+            <label>Street Address
+              <span style="font-weight: 400; color: var(--tx3)">(optional)</span>
+            </label
+            ><input
+              id="addr"
+              placeholder="123 Main St"
+              autocomplete="street-address"
+            />
+          </div>
+          <div class="frow">
+            <div class="field">
+              <label>City
+                <span style="font-weight: 400; color: var(--tx3)">(optional)</span>
+              </label
+              ><input id="ct" placeholder="Austin" autocomplete="address-level2" />
+            </div>
+            <div class="field">
+              <label>State
+                <span style="font-weight: 400; color: var(--tx3)">(optional)</span>
+              </label
+              ><input id="st" placeholder="TX" maxlength="2" autocomplete="address-level1" />
+            </div>
+          </div>
+          <div class="field">
             <label>Postal / ZIP code</label
             ><input
               id="zp"
@@ -1038,6 +1062,10 @@
             <div class="sumrow">
               <span class="lb">Email</span>
               <span class="vl" id="s-em">&mdash;</span>
+            </div>
+            <div class="sumrow">
+              <span class="lb">Address</span>
+              <span class="vl" id="s-addr">&mdash;</span>
             </div>
             <div class="sumrow">
               <span class="lb">Area</span>
@@ -1640,6 +1668,8 @@
         ).trim();
         document.getElementById("s-ph").textContent = val("ph") || "—";
         document.getElementById("s-em").textContent = val("em") || "—";
+        var addrParts = [val("addr").trim(), val("ct").trim(), val("st").trim()].filter(Boolean);
+        document.getElementById("s-addr").textContent = addrParts.join(", ") || "—";
         document.getElementById("s-zp").textContent = val("zp") || "—";
       }
 
@@ -1660,7 +1690,10 @@
             ph = val("ph").trim();
           var em = val("em").trim(),
             zp = val("zp").trim(),
-            nt = val("nt").trim();
+            nt = val("nt").trim(),
+            addr = val("addr").trim(),
+            ct = val("ct").trim(),
+            st = val("st").trim();
           // upsert contact
           var cr = await fetch(GHL.base + "/contacts/upsert", {
             method: "POST",
@@ -1671,6 +1704,9 @@
               lastName: ln,
               phone: ph,
               email: em || undefined,
+              address1: addr || undefined,
+              city: ct || undefined,
+              state: st || undefined,
               postalCode: zp || undefined,
               source: "Grande Air Solutions Website",
               tags: [
@@ -1698,7 +1734,7 @@
             notes: [
               "Service: " + (ST.svc || "—"),
               "Urgency: " + (ST.urg || "—"),
-              "Area: " + (zp || "—"),
+              addr ? "Address: " + [addr, ct, st, zp].filter(Boolean).join(", ") : ("Area: " + (zp || "—")),
               nt ? "Notes: " + nt : null,
             ]
               .filter(Boolean)
